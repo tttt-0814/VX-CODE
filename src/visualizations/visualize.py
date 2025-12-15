@@ -172,9 +172,10 @@ def vis_vxcode_results(
     results_eval_heatmap: List[torch.Tensor],
     results_patch_size: List[Tuple[int, int]],
     save_dir: Path,
-    idx: int,
+    file_id: str,
     bgr2rgb: bool,
 ) -> None:
+    save_prefix = Path(file_id).stem if file_id else "image"
     for i in range(len(pred_boxes)):
         pred_box_i = pred_boxes[i]
         result_eval_heatmap_i = results_eval_heatmap[i]
@@ -183,7 +184,9 @@ def vis_vxcode_results(
         # Visualize detection result
         save_dir_detection = save_dir.joinpath("detection_results")
         save_dir_detection.mkdir(exist_ok=True, parents=True)
-        save_name_detection = save_dir_detection.joinpath("{}_{}.png".format(idx, i))
+        save_name_detection = save_dir_detection.joinpath(
+            f"{save_prefix}_{i}.png"
+        )
         ax = vis_bbox(img, pred_boxes[i][None, ...], bgr2rgb=bgr2rgb)
         ax.axis("off")
         plt.savefig(save_name_detection, bbox_inches="tight", dpi=DPI)
@@ -193,7 +196,7 @@ def vis_vxcode_results(
         save_dir_vis_heatmap = save_dir.joinpath("vis_heatmaps")
         save_dir_vis_heatmap.mkdir(exist_ok=True, parents=True)
         save_name_vis_heatmap = save_dir_vis_heatmap.joinpath(
-            "{}_{}.png".format(idx, i)
+            f"{save_prefix}_{i}.png"
         )
         vis_heatmap_i = F.resize(
             result_eval_heatmap_i[None, ...], size=(img.shape[1], img.shape[2])

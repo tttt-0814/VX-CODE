@@ -124,9 +124,19 @@ def compute_heatmaps(
                 score_thresh=score_thresh,
                 model_name=model_name,
             )
-
             if target_flag.sum() == 0:
                 continue
+
+            num_detected = int(target_flag.sum().item())
+            raw_file_name = inputs[0].get("file_name") or inputs[0].get("image_id")
+            if isinstance(raw_file_name, str):
+                file_name = Path(raw_file_name).name
+            elif raw_file_name is not None:
+                file_name = str(raw_file_name)
+            else:
+                file_name = f"idx{idx}"
+            save_id = Path(file_name).stem
+            print(f"Detected {num_detected} instances in {file_name}")
 
             explanation_results = vxcode(inputs, target_results, target_flag)
             (
@@ -145,7 +155,7 @@ def compute_heatmaps(
                 list_results_eval_heatmap,
                 list_results_patch_size,
                 Path(save_dir),
-                idx,
+                save_id,
                 bgr2rgb=False if model_name == "detr" else True,
             )
 
