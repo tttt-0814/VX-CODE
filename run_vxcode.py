@@ -114,7 +114,7 @@ def compute_heatmaps(
     for dataset_name in cfg.DATASETS.TEST:
         loader = build_detection_test_loader(cfg, dataset_name)
 
-        for idx, inputs in enumerate(tqdm(loader)):
+        for idx, inputs in enumerate(tqdm(loader, total=max_batches)):
             if idx >= max_batches:
                 break
 
