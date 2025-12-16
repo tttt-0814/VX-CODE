@@ -15,15 +15,20 @@ from detectron2.modeling import META_ARCH_REGISTRY, build_backbone, detector_pos
 from detectron2.structures import Boxes, ImageList, Instances, BitMasks, PolygonMasks
 from detectron2.utils.logger import log_first_n
 from fvcore.nn import giou_loss, smooth_l1_loss
-from models.backbone import Joiner
-from models.detr import DETR, SetCriterion
-from models.matcher import HungarianMatcher
-from models.position_encoding import PositionEmbeddingSine
-from models.transformer import Transformer
-from models.segmentation import DETRsegm, PostProcessPanoptic, PostProcessSegm
-from util.box_ops import box_cxcywh_to_xyxy, box_xyxy_to_cxcywh
-from util.misc import NestedTensor
-from datasets.coco import convert_coco_poly_to_mask
+
+from src.models.detr.models.backbone import Joiner
+from src.models.detr.models.detr import DETR, SetCriterion
+from src.models.detr.models.matcher import HungarianMatcher
+from src.models.detr.models.position_encoding import PositionEmbeddingSine
+from src.models.detr.models.transformer import Transformer
+from src.models.detr.models.segmentation import (
+    DETRsegm,
+    PostProcessPanoptic,
+    PostProcessSegm,
+)
+from src.models.detr.util.box_ops import box_cxcywh_to_xyxy, box_xyxy_to_cxcywh
+from src.models.detr.util.misc import NestedTensor
+from src.models.detr.datasets.coco import convert_coco_poly_to_mask
 
 __all__ = ["Detr"]
 

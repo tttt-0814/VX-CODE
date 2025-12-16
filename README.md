@@ -25,8 +25,9 @@ The overall framework is shown below:
 - `third_party/detectron2`: Detectron2 source as a submodule.
 
 ## Setup
-1) Pull submodules (needed for Detectron2):
+1) Clone the repository and pull submodules (Detectron2 lives in `third_party/detectron2`):
    ```
+   git clone https://github.com/tttt-0814/VX-CODE.git && cd VX-CODE
    git submodule update --init --recursive
    ```
 2) Create a Python environment with PyTorch + CUDA that matches your GPU drivers.
