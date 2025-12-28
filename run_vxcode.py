@@ -52,13 +52,13 @@ def parse_args() -> argparse.Namespace:
         help="Dataset name registered in Detectron2.",
     )
     parser.add_argument(
-        "--max-batches",
+        "--max_batches",
         type=int,
         default=10,
         help="Max batches to run for a quick check.",
     )
     parser.add_argument(
-        "--score-thresh",
+        "--score_thresh",
         type=float,
         default=0.95,
         help="Score threshold to filter detections for reporting.",
@@ -127,17 +127,9 @@ def compute_heatmaps(
             if target_flag.sum() == 0:
                 continue
 
-            num_detected = int(target_flag.sum().item())
-            raw_file_name = inputs[0].get("file_name") or inputs[0].get("image_id")
-            if isinstance(raw_file_name, str):
-                file_name = Path(raw_file_name).name
-            elif raw_file_name is not None:
-                file_name = str(raw_file_name)
-            else:
-                file_name = f"idx{idx}"
-            save_id = Path(file_name).stem
-            print(f"Detected {num_detected} instances in {file_name}")
-
+            # In this demo, we only keep the instance with the highest score
+            top_score_idx = int(target_results[0].scores.argmax().item())
+            target_results = [target_results[0][top_score_idx : top_score_idx + 1]]
             explanation_results = vxcode(inputs, target_results, target_flag)
             (
                 target_results,
@@ -149,6 +141,14 @@ def compute_heatmaps(
                 list_results_padding_len,
             ) = explanation_results
 
+            raw_file_name = inputs[0].get("file_name") or inputs[0].get("image_id")
+            if isinstance(raw_file_name, str):
+                file_name = Path(raw_file_name).name
+            elif raw_file_name is not None:
+                file_name = str(raw_file_name)
+            else:
+                file_name = f"idx{idx}"
+            save_id = Path(file_name).stem
             vis_vxcode_results(
                 inputs[0]["image"].numpy(),
                 target_results[0].pred_boxes.tensor.detach().to("cpu").numpy(),
