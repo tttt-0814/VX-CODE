@@ -1,4 +1,5 @@
-# VX-CODE: Explaining Object Detectors via Collective Contribution of Pixels ([Citation](#citation))
+# VX-CODE: Explaining Object Detectors via Collective Contribution of Pixels 
+[📝 Paper](https://arxiv.org/abs/2412.00666) | [📌 Citation](#citation)
 
 
 Official implementation of VX-CODE, proposed in “Explaining Object Detectors via Collective Contribution of Pixels.”
