@@ -1,6 +1,6 @@
 # VX-CODE: Explaining Object Detectors via Collective Contribution of Pixels 
 [📝 Paper](https://arxiv.org/abs/2412.00666) | [📌 Citation](#citation)
-
+___
 
 Official implementation of VX-CODE, proposed in “Explaining Object Detectors via Collective Contribution of Pixels.”
 VX-CODE is a visual explanation method for object detectors that identifies regions contributing most to detections using greedy patch selection that considers both Shapley values and interactions.
